@@ -19,3 +19,9 @@ class Moto(models.Model):
 
     def __str__(self):
         return self.modelo
+
+
+class Venda(models.Model):
+    nota_fiscal = models.IntegerField()
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    moto = models.ForeignKey(Moto, on_delete=models.CASCADE)

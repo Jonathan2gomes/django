@@ -14,10 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from ronda.views import clientes
+from django.urls import path, include
+from ronda.views import ClientesViewSet, MotosViewSet, VendasViewSet, ListaVendaCliente
+from rest_framework import routers
+
+
+router = routers.DefaultRouter()
+router.register('clientes', ClientesViewSet, basename='Clientes')
+router.register('motos', MotosViewSet, basename='Motos')
+router.register('vendas', VendasViewSet, basename='Vendas')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('clientes/', clientes),
+    path('', include(router.urls)),
+    path('cliente/<int:pk>/vendas', ListaVendaCliente.as_view())
 ]
